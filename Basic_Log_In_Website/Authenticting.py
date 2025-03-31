@@ -42,30 +42,21 @@ Question from the Code
 
 '''
 2. What is a Cookie?
-A cookie is a small piece of data stored in your browser by a website.
-
-Used for tracking sessions, authentication, and preferences.
-
-Stored as key-value pairs in the browser.
-
-Can be temporary (session cookies) or persistent (stored cookies).
-
-Websites set cookies in the Set-Cookie header.
+    - A cookie is a small piece of data stored in your browser by a website.
+    - Used for tracking sessions, authentication, and preferences.
+    - Stored as key-value pairs in the browser.
+    - Can be temporary (session cookies) or persistent (stored cookies).
+    - Websites set cookies in the Set-Cookie header.
 
 Example: How Cookies Work
-You log in → The server sends a cookie with Set-Cookie: session_id=abc123.
-
-Browser stores the cookie.
-
-Next request to the website → The cookie is sent automatically in Cookie: session_id=abc123.
-
-Server identifies you based on the session ID.
+    - You log in → The server sends a cookie with Set-Cookie: session_id=abc123.
+    - Browser stores the cookie.
+    - Next request to the website → The cookie is sent automatically in Cookie: session_id=abc123.
+    - Server identifies you based on the session ID.
 
 📌 Why use cookies?
-
-They allow websites to remember users without requiring re-authentication.
-
-Web scraping tools like requests and Selenium use cookies for persistent logins.
+    - They allow websites to remember users without requiring re-authentication.
+    - Web scraping tools like requests and Selenium use cookies for persistent logins.
 '''
 
 import requests
@@ -80,20 +71,16 @@ print(session.cookies)  # Prints session cookies
 
 '''
 3. What is a Token?
-A token is a piece of data used to verify identity and protect against security threats like CSRF (Cross-Site Request Forgery) and authentication attacks.
-
-CSRF tokens prevent attackers from performing unwanted actions on behalf of users.
-
-Authentication tokens (JWT, OAuth, API keys) allow users to access resources securely.
-
-Tokens are often short-lived and must be refreshed.
+    A token is a piece of data used to verify identity and protect against security threats like CSRF (Cross-Site Request Forgery) and authentication attacks.
+    CSRF tokens prevent attackers from performing unwanted actions on behalf of users.
+    Authentication tokens (JWT, OAuth, API keys) allow users to access resources securely.
+    Tokens are often short-lived and must be refreshed.
 
 Example: How a CSRF Token Works
-You visit the login page → Server generates a CSRF token.
-
-The token is included in the form as:
-<input type="hidden" name="csrf_token" value="123xyz">
-When you submit the form, the server verifies if the token matches.
+    You visit the login page → Server generates a CSRF token.
+    The token is included in the form as:
+    <input type="hidden" name="csrf_token" value="123xyz">
+    When you submit the form, the server verifies if the token matches.
 
 If the token is missing or incorrect, the request is rejected.
 '''
@@ -117,5 +104,6 @@ print(response.text)
 # Authenticate users securely.
 
 # Used in APIs (JWT, OAuth) for authentication instead of session cookies.
+
 
 
