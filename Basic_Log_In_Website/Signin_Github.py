@@ -3,6 +3,9 @@
 # r = requests.post("https://github.com/session", data=params)
 # print(r.text)
 
+import sys
+import io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 import requests
 from bs4 import BeautifulSoup
 

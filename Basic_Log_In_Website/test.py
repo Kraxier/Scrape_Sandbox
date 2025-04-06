@@ -11,26 +11,26 @@ Next is Quote_To_Scrape
 '''
 
 # Trying to get the Cookies 
-# import requests
-# from bs4 import BeautifulSoup
-# session = requests.Session()
-# from urllib.request import urlopen
-# login_url = "https://quotes.toscrape.com/login"
-# login_data = {"username": "kraxier", "password": "12345"}
+import requests
+from bs4 import BeautifulSoup
+session = requests.Session()
+from urllib.request import urlopen
+login_url = "https://quotes.toscrape.com/login"
+login_data = {"username": "kraxier", "password": "12345"}
 
-# response = session.post(login_url, data=login_data)
-# print(session.cookies) 
-# # Results are: <RequestsCookieJar[<Cookie session=eyJ1c2VybmFtZSI6ImtyYXhpZXIifQ.Z-rgDQ.WBpBCskUYlrfvpfUmvot8J1_b0s for quotes.toscrape.com/>]>
-# # i using the parameter of "session.get" to get the quotetoscrape instead of urlopen it 
-# response = session.get("https://quotes.toscrape.com/")
-# soup = BeautifulSoup(response.text, 'html.parser')
+response = session.post(login_url, data=login_data)
+print(session.cookies) 
+# Results are: <RequestsCookieJar[<Cookie session=eyJ1c2VybmFtZSI6ImtyYXhpZXIifQ.Z-rgDQ.WBpBCskUYlrfvpfUmvot8J1_b0s for quotes.toscrape.com/>]>
+# i using the parameter of "session.get" to get the quotetoscrape instead of urlopen it 
+response = session.get("https://quotes.toscrape.com/")
+soup = BeautifulSoup(response.text, 'html.parser')
 
-# # Check for logged-in elements
-# username_display = soup.find('a', href='/logout')
-# if username_display:
-#     print(f"Success! Logged in as: {username_display.text.strip()}")
-# else:
-#     print("Login failed - no logout link found")
+# Check for logged-in elements
+username_display = soup.find('a', href='/logout')
+if username_display:
+    print(f"Success! Logged in as: {username_display.text.strip()}")
+else:
+    print("Login failed - no logout link found")
 '''
 Explanation for this 
     1. Log in Was Successful that server sent back a session Cookie
