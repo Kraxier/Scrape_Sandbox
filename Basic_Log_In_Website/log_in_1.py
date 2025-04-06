@@ -20,8 +20,6 @@ HTML Website:
                 </p>
             </div>
         </div>
-    
-
     <form action="/login" method="post" accept-charset="utf-8">
         <input type="hidden" name="csrf_token" value="hrisoNvEqlTWuafFcVOGAUmtXbLkPDKgYjQynISxCdBJpeHRZMzw">
         <div class="row">
@@ -57,46 +55,103 @@ HTML Website:
 
 '''
 
-# import requests
-
 # Login_Website: https://quotes.toscrape.com/login
 # Website to Scrape: https://quotes.toscrape.com/
-# params = {'username': 'Kraxier', 'password': '12345'}
-# r = requests.post("https://quotes.toscrape.com/", data=params)
+
+# Website: https://pythonscraping.com/pages/files/form.html
+# Website: https://pythonscraping.com/pages/files/processing.php
+# My Next Question is how to know the next page of it? 
+    # [Website Domain] + [action path]
+    # https://pythonscraping.com/pages/files + /processing.php
+    # https://pythonscraping.com/pages/files/form.html 
+    # It Did Change Things up 
+# import requests
+
+# params = {'firstname': 'Kraxier', 'lastname': 'Luthor'}
+# r = requests.post("https://pythonscraping.com/pages/files/processing.php", data=params)
 # print(r.text)
+# print()
 
+'''
+Question:
 
-# This imports the requests library, which is a popular HTTP library for making web requests in Python.
+Why do i need to post in https://pythonscraping.com/pages/files/processing.php url instead of url https://pythonscraping.com/pages/files/form.html
+    Why POST to processing.php?
+        It's designed to receive data (like form submissions) and process it (save to a database, return a response, etc.).
+        In this case, it likely takes firstname and lastname, processes them, and returns a confirmation message.
+    Return confirmation message (e.g., "Hello Kraxier Luthor!").
+
+POST is used to send data securely to a server.
+processing.php is the server’s endpoint that handles the data.
+This is how login forms, APIs, and file uploads work behind the scenes.
+
+Understanding of Code 
+    params is parameter to send a data in the proccessing.php but in term of post it stored in "data"
+
+    How do you know the Parameter of Submissions?
+        1. <input type="text" class="form-control" id="username" name="username"> # Input Type of Files Submission in HTML this part is the key name="username"
+        2. 
+My Own Words:
+    Basically i send the "Kraxier" and "Luthor" to the processing.php which is called the "server side script" where it can proccess and handle the data 
+
+'''
+
+# I'm Going to try to do this also in the 
+# https://quotes.toscrape.com/login
+# If i log in the website of this it change from /login to https://quotes.toscrape.com/
+# There are lot more complicated than the simple Submission thing 
+
 # import requests
 
 # params = {'username': 'Kraxier', 'password': '12345'}
-# Dictionary  in Python used for login credential 
-
-# r = requests.post("https://quotes.toscrape.com/", data=params)
-# Sends a POST request to the main page (not the login page) with the credentials
-# data=params sends the username/password as form data
-
-'''
-<!doctype html>
-<html lang=en>
-<title>405 Method Not Allowed</title>
-<h1>Method Not Allowed</h1>
-<p>The method is not allowed for the requested URL.</p>
-'''
-# import sys
-# import io
-# sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+# login_url = "https://quotes.toscrape.com/login"
+# r = requests.post(login_url, data=params)
+# print(r)
 
 # import requests
-# login_url = "https://quotes.toscrape.com/login"
-# target_url = "https://quotes.toscrape.com/"
-# credentials = {'username': 'Kraxier', 'password': '12345'}
-# response = requests.post(login_url, data=credentials)
-# print(response.text)
-# print()
-# protected_content = requests.get(target_url)
-# print(protected_content.text)
+# # login_url = "https://pythonscraping.com/pages/files/form.html"
+# login_url = "https://pythonscraping.com/pages/files/processing.php" 
+# params = {'firstname': 'Kraxier', 'lastname': 'Luthor'}
+# r = requests.post(login_url, data=params)
+# print(r)
+# print("Status:", r.status_code)  # Should be 200
+# print("Response:", r.text)  # Will show server's response
+# print("Cookies:", r.cookies)  # Check if any auth cookies were set
+'''
+# Successfuly Logging in 
+<Response [200]>
+Status: 200
+Response: Hello there, Kraxier Luthor!
+Cookies: <RequestsCookieJar[]>
+'''
+# With Logging in and File Submission 
+# Website: https://pythonscraping.com/pages/cookies/login.html
+# https://pythonscraping.com/pages/cookies/welcome.php
 
+# The Corrected URL 
+import requests
+session = requests.Session()
+login_page = session.get("https://pythonscraping.com/pages/cookies/login.html")
+login_url = "https://pythonscraping.com/pages/cookies/welcome.php" 
+params = {'username': 'Kraxier', 'password': 'password'}
+s = session.post(login_url, data=params)
+print('Cookie is set to:')
+print('Going to profile page...')
+s = session.get('http://pythonscraping.com/pages/cookies/profile.php')
+print(s.text)
 
+# basically Cookies is set to maintain a login state in website that you don't need to reanswering the submission thing 
+# using "Session" to handle things 
+
+# Output
+'''
+Cookie is set to:
+{}
+Going to profile page...
+You're not logged into the site!<br>Visit <a href="login.html">the login page</a> to log in
+
+i think Selenium Can handle Cookies too man 
+but it really depends on how you use it man 
+'''
 
 
