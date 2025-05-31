@@ -1,4 +1,6 @@
 
+# venv_PS_Toscrape
+
 r'''
 Goal Scrape the Entirety off https://quotes.toscrape.com/js/ # A javascript Website 
 
@@ -68,27 +70,74 @@ To Do List
 7. Asynchronous Scrapping 
 '''
 
+# Installing the Playwright 
+r'''
+
+Navigate to Folders: 
+eg: cd C:\Users\klabi\OneDrive\Desktop\Scrape_Quotes_To_Scrape
+
+Create the VENV: 
+eg: python -m venv venv_PS_Toscrape
+
+Activate the VENV: 
+venv_PS_Toscrape\Scripts\activate
+
+Using the VENV for any folder access 
+if your folder is: cd C:\Users\klabi\OneDrive\Desktop\Scrape_Quotes_To_Scrape\Javascript
+
+Activate it Using: 
+..\venv_PS_Toscrape\Scripts\activate
+
+or 
+Navigate to 
+cd C:\Users\klabi\OneDrive\Desktop\Scrape_Quotes_To_Scrape
+Activate the VENV and then CD to Javascript 
+'''
 
 # new_playwright_venv\Scripts\activate
 # python test_1.py
 
-# from playwright.sync_api import sync_playwright, Playwright
-# def run(playwright: Playwright):
-#     chromium = playwright.chromium
-#     browser = chromium.launch(headless=True) 
-#     page = browser.new_page()
-#     page.goto("https://quotes.toscrape.com/js/")
-#     print(page.title())
-#     # Printing the Header of the Website Trying the Simple Extraction
-#     h1_text = page.locator('h1').text_content()
-#     print(f"H1 text: {h1_text}")
+from playwright.sync_api import sync_playwright, Playwright
+from urllib.parse import urljoin
+
+def run(playwright: Playwright):
+
+    base_url = "https://quotes.toscrape.com/js/"
+    chromium = playwright.chromium
+    browser = chromium.launch(headless=True) 
+    page = browser.new_page()
+    page.goto(base_url)
+    print(page.title())
+    # Printing the Header of the Website Trying the Simple Extraction
+    h1_text = page.locator('h1').text_content()
+    print(f"H1 text: {h1_text}")
 
 
-#     quote = page.locator('.quote .text').all()
-#     for quote in quote:
-#         print(quote.text_content()) 
-#     browser.close()
+    # quote = page.locator('.quote .text').all()
+    # for quote in quote:
+    #     print(quote.text_content())
 
-# with sync_playwright() as playwright:
-#     run(playwright)
+    # 10 URL and i needed to loop it to create paginations 
+
+    # next_page_partial = page.locator('.next a').get_attribute('href')
+    # next_page_url = urljoin(base_url, next_page_partial) 
+    # print(next_page_url)
+    # page_2 = browser.new_page()
+    # page_2.goto(next_page_url)
+
+    # Creating a Paginations for the Next URL
+    while True:
+        # Getting the href from the page.locator itself
+        # So the Problem is "page" itself because it will infinitely loop in there 
+
+        next_page_partial = page.locator('.next a').get_attribute('href')
+        next_page_url = urljoin(base_url, next_page_partial) 
+        print(next_page_url)
+        page_2 = browser.new_page()
+        page_2.goto(next_page_url)
+
+    browser.close()
+
+with sync_playwright() as playwright:
+    run(playwright)
 
