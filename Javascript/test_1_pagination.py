@@ -1,5 +1,9 @@
 # Solving the Problem of Pagination in Playwright
 # python test_1_pagination.py
+# venv_PS_Toscrape\Scripts\activate
+
+
+# I'm Done with this Test_1_paginations and stuff 
 
 
 # First Version of the Code and there are Problem here 
@@ -126,6 +130,15 @@ def run(playwright: Playwright):
     while True: 
         next_page = page.locator('.next a')
 
+
+        # This is Where the Extracting the quotes part 
+        quotes = page.locator(".quote .text").all()
+        # print(quotes)
+
+        for quote in quotes: 
+            print(quote.text_content())
+            print()
+
         # .count() 
         r'''
         .count count the number of DOM elements that match my locator
@@ -137,10 +150,7 @@ def run(playwright: Playwright):
         if next_page.count() == 0:
             print("Reached last page. Stopping.")
             break
-
-        if next_page is None:
-            print("No more pages. Stopping.")
-            break 
+        
         # next_page.get_attribute('href') which is after locating it i can modify it either by printing the content or 
         # getting the Attribute itself 
         # If the element doesn’t exist, .get_attribute() waits until timeout (default: 30s), then throws TimeoutError.
