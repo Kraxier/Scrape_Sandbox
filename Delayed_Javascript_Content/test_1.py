@@ -68,3 +68,26 @@ def run(playwright: Playwright):
 
 with sync_playwright() as playwright:
     run(playwright)
+
+
+
+r'''
+Criticize by Deepseek: 
+    The Problem of the Current Code my code is basically Fixed Delay it means from the word fixed its constant but the thing is 
+    things can go varying in terms of "Real World Delay"
+
+1. Real world Delay consist of Network Condition can vary, Server response Time Fluctuate, Depends on Device Performance
+    This can Solve to wait for Specific COnditions: Elements, Content
+2. How i can Determine the Real Delay of the Website?
+    Observing in the Network Activity where checking the XHR/Fetch and DOM mutation Occur in performance Tab 
+
+Robust Scrapping Content in Delayed : 
+    1. Implementing Multiple Verfication Check like  Presence, visibility, content, count
+    2. Add retry mechanisms 
+    3. How i can Monitor Network Activity?
+    4. Create a Adaptive Waiting Strategies for a Script 
+    5. "Handle errors gracefully - With proper logging and recovery"
+    6. How to Test Under a Different Conditions
+
+
+'''
