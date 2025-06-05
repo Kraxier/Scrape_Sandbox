@@ -10,38 +10,14 @@ Progression Path for Learning the Delayed Content of Javascript
 # 🎯 To Do List 
 # 1. MASTER EXPLICIT WAITING (Core Skill)
 
+from playwright.sync_api import sync_playwright, Playwright
+from urllib.parse import urljoin
 
-r'''
-🎯 1. MASTER EXPLICIT WAITING (Core Skill)
-# Train with these patterns (in order of complexity):
 from playwright.sync_api import expect
-
-# 1. Basic presence
-page.wait_for_selector(".target-element")
-
-# 2. Visibility check (rendered & not hidden)
-page.wait_for_selector(".target-element", state="visible")
-
-# 3. Content verification
-page.wait_for_selector("text='Specific Text'")
-
-# 4. Combined check (Modern Playwright)
-expect(page.locator(".quote")).to_be_visible()
-
-# 5. Quantity verification
-expect(page.locator(".quote")).to_have_count(10)
-
-# 6. Custom logic waiting
-page.wait_for_function("""
-  () => {
-    const el = document.querySelector('.price');
-    return el && parseFloat(el.textContent) > 100;
-  }
-""")
+r'''
+This code is supposed to be a synchronous version as opposed to async version 
+but basically this line of code is to verify wether the elements exist 
 '''
-
-
-
 
 
 r'''
