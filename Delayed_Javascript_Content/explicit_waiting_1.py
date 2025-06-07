@@ -4,6 +4,7 @@
 # Implementing Part of things 
 # venv_PS_Toscrape\Scripts\activate
 
+
 from playwright.sync_api import sync_playwright, Playwright
 from urllib.parse import urljoin
 from playwright.sync_api import expect
@@ -94,6 +95,7 @@ from playwright.sync_api import expect
 
 # 1. Basic presence
 page.wait_for_selector(".target-element")
+
 
 # Wait for the elements to appear in the DOM part 
 # Use Case is when you need to confirm if the elemenet are loaded 
@@ -216,5 +218,25 @@ Key Takeaways
     Implement polling logic if elements trickle in unpredictably.
 
 3. Never assume all elements load simultaneously—design your scraper to handle variability.
+
+'''
+
+
+r'''
+Succesfuly Scrape the Dynamic Content 
+
+Dynamic Content Definition Based on Web Scrapping 
+The page are still loading after the inital load 
+
+Due to Javascript Executions: 
+    A stock price updates in real-time via WebSocket/AJAX.
+User Interactions Trigger Changes
+    Clicking, scrolling, or typing may load new content.
+    Infinite scroll (like Twitter or Facebook).
+    A modal popup appearing after a button click.
+Data Fetched from APIs
+    Many modern websites (React, Angular, Vue apps) load a skeleton HTML first, then fill data via API calls.
+    Example:
+    An e-commerce product list loaded via fetch() after page load
 
 '''
