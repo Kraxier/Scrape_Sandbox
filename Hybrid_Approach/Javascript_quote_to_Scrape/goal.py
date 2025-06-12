@@ -1,4 +1,6 @@
 # This is the Goal for Javascript Website
+# venv_PS_Toscrape\Scripts\activate
+# python goal.py
 
 r'''
 Hybrid Approach Gradually Implement Things
@@ -42,3 +44,47 @@ Method              Purpose                                                     
 .is_enabled()	Checks if element is clickable/editable (not disabled)	        Test if a submit button is active
 .is_checked()	Checks if checkbox/radio is selected	Validate a "Terms & Conditions" checkbox
 '''
+
+
+from playwright.sync_api import sync_playwright, Playwright
+from urllib.parse import urljoin
+
+def run(playwright: Playwright):
+    base_url = "https://quotes.toscrape.com/js/"
+    # Testing Different Browser
+    chromium = playwright.chromium
+    # chromium = playwright.firefox
+    # chromium = playwright.webkit
+    r'''
+    Firefox: playwright.firefox
+    WebKit: playwright.webkit
+
+    I notice that in terms of Firefox it is really fast 
+    Conclusion: Stick to Chrome because user almost use that 
+    '''
+    browser = chromium.launch(headless=False) 
+    page = browser.new_page()
+    page.goto(base_url)
+    while True: 
+        next_page = page.locator('.next a')
+        quotes = page.locator(".quote .text").all()
+        for quote in quotes: 
+            print(quote.text_content())
+            print()
+        if next_page.count() == 0:
+            print("Reached last page. Stopping.")
+            break
+        next_page_url = urljoin(base_url, next_page.get_attribute('href')) 
+        print(next_page_url)
+        page.goto(next_page_url)
+    page.close() 
+    browser.close()
+
+    
+
+with sync_playwright() as playwright:
+    run(playwright)
+
+# ⌚ 📱 💻 🖥️ 🖨️ 🔋 🔌 💡 🔦 🕯️ 🧯 📷 📺 📻 🧭 🔑 🪑 🛏️ 🚪
+
+
