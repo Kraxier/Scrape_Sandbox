@@ -4,6 +4,21 @@ r'''
 I try to activate the venv in the different folder and it didn't work 
 '''
 
+
+r'''
+Summary 
+'''
+
+
+
+
+
+
+
+
+
+
+
 # My Own Implementation: 
 '''
 Practical Implementation Roadmap
@@ -351,10 +366,57 @@ for url, title, error in results:
 '''
 
 
+# Prerequisite Concepts for Understanding Multiple Tabs and Browser
+
+r'''
+Fundamentals of Web Scrapping for Scrapping Architecture 
+    1. What does it mean by Share Memory
+    Tabs and Browser share the sane Ram for Allocation 
+        Shared: more efficient, but riskier.
+        Isolated: safer, but uses more memory. (This means Multiple Browser)
+    Share Ram means : It allows the JavaScript engines, DOM objects, and other components of multiple tabs to share common memory structures.
+    This means its already load on your browser that can reuse in multiple tabs like a template thing 
+
+    2. Share Cache:
+        Cache Files like image,JS and CSS are Share or reused across tabs 
+        Scraping Tip: Disable cache when you need fresh requests:
+    
+    3. Cookies 
+        Small pieces of data stored by websites (login sessions, tracking).
+            * Same cookies across tabs = Same login session
+            * Different cookies = Appear as different users
+            * Critical for: Sites requiring login (e.g., scraping LinkedIn profiles)
+    4. Sessions
+        Server-side tracking of user activity (often cookie-based).
+        One session = One "user" from the website's perspective
+        Scraping Trick: Rotate sessions to avoid detection:
+    5. Local Storage
+        Persistent Browser Storage 
+        Scraping Relevance:
+            Stores user preferences/auth tokens
+            Some sites save API keys here
+    6. Cache (Browser Cache)
+        Temporary storage of web assets (images, scripts).
+        Enable cache → Faster but might get stale data
+        Disable cache → Slower but fresh requests
+    7. Proxy Configurations
+        What it is: Routing traffic through intermediary IP addresses.
+        Avoid IP bans by rotating proxies
+        Geographic-specific scraping
+    Practical Scraping Cheat Sheet
+    Term	        When to Care About It	                        Playwright Control Method
+    Memory	        Running many tabs on low-RAM servers	        Limit tabs per browser
+    Cookies	        Logins, session persistence	                    browser.newContext() per session
+    Cache	        Avoiding stale data/being detected as a bot	    ignoreHTTPSErrors: true
+    **LocalStorage	Sites storing auth tokens here	                context.clearCookies() + context.clearStorage()
+    Proxy	        Avoiding IP bans                                chromium.launch({ proxy: { ... } })
+'''
+
+r'''
+Summary of Prerequisite 
 
 
-
-
+'''
 
 
 # Concepts in Multiple Tabs and Browser
@@ -439,49 +501,12 @@ Best Practice
     3. Closing tabs for prevention of "Memory Leaks"
     4. Implement Always the Error Handling 
     5. Implement the Throttling limiting the request or delays 
-
-
-Fundamentals of Web Scrapping for Scrapping Architecture 
-    1. Share Memory
-    Tabs and Browser share the sane Ram for Allocation 
-        Shared: more efficient, but riskier.
-        Isolated: safer, but uses more memory.
-    Share Ram means : It allows the JavaScript engines, DOM objects, and other components of multiple tabs to share common memory structures.
-
-    2. Share Cache:
-        Cache Files like image,JS and CSS are Share or reused across tabs 
-        Scraping Tip: Disable cache when you need fresh requests:
-    
-    3. Cookies 
-        Small pieces of data stored by websites (login sessions, tracking).
-            * Same cookies across tabs = Same login session
-            * Different cookies = Appear as different users
-            * Critical for: Sites requiring login (e.g., scraping LinkedIn profiles)
-    4. Sessions
-        Server-side tracking of user activity (often cookie-based).
-        One session = One "user" from the website's perspective
-        Scraping Trick: Rotate sessions to avoid detection:
-    5. Local Storage
-        Persistent Browser Storage 
-        Scraping Relevance:
-            Stores user preferences/auth tokens
-            Some sites save API keys here
-    6. Cache (Browser Cache)
-        Temporary storage of web assets (images, scripts).
-        Enable cache → Faster but might get stale data
-        Disable cache → Slower but fresh requests
-    7. Proxy Configurations
-        What it is: Routing traffic through intermediary IP addresses.
-        Avoid IP bans by rotating proxies
-        Geographic-specific scraping
-    Practical Scraping Cheat Sheet
-    Term	        When to Care About It	                        Playwright Control Method
-    Memory	        Running many tabs on low-RAM servers	        Limit tabs per browser
-    Cookies	        Logins, session persistence	                    browser.newContext() per session
-    Cache	        Avoiding stale data/being detected as a bot	    ignoreHTTPSErrors: true
-    **LocalStorage	Sites storing auth tokens here	                context.clearCookies() + context.clearStorage()
-    Proxy	        Avoiding IP bans                                chromium.launch({ proxy: { ... } })
 '''
+
+
+
+
+
 
 
 # Analyze this Text Properly 
