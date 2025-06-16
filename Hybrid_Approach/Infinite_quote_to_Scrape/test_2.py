@@ -1,4 +1,5 @@
 # This is for Scroll Stuff in Core 
+# venv_PS_Toscrape\Scripts\activate
 
 from playwright.sync_api import sync_playwright, Playwright
 from urllib.parse import urljoin

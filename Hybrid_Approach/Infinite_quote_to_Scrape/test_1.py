@@ -1,5 +1,6 @@
 # Scrape the Infinite Scrolling in Quotetoscrape.com
 # test_1.py
+# venv_PS_Toscrape\Scripts\activate
 
 r'''
 Core Playwright Skills i needed based on Deepseek
