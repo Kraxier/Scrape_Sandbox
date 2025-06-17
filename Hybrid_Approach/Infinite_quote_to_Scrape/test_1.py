@@ -132,28 +132,27 @@ like the 10% of what i'm going to use in page.evaluate()
 '''
 
 
-r'''
-page.evaluate() 80% Result for 10% Use Thing 
-# 1. Extract page metadata
-title = page.evaluate('document.title')
-url = page.evaluate('window.location.href')
 
-# 2. Get text content from elements
-heading = page.evaluate('document.querySelector("h1").innerText')
+# page.evaluate() 80% Result for 10% Use Thing 
+# # 1. Extract page metadata
+# title = page.evaluate('document.title')
+# url = page.evaluate('window.location.href')
 
-# 3. Extract lists of data
-quotes = page.evaluate('''() => {
-    #return Array.from(document.querySelectorAll('.quote'))
-        # .map(el => el.innerText)
-}''')
+# # 2. Get text content from elements
+# heading = page.evaluate('document.querySelector("h1").innerText')
 
-# 4. Extract attribute values
-links = page.evaluate('''() => {
-    # return Array.from(document.querySelectorAll('a'))
-        # .map(a => a.href)
-}''')
+# # 3. Extract lists of data
+# quotes = page.evaluate('''() => {
+#     #return Array.from(document.querySelectorAll('.quote'))
+#         # .map(el => el.innerText)
+# }''')
 
-# 5. Get page dimensions
-scroll_y = page.evaluate('window.scrollY')
-full_height = page.evaluate('document.body.scrollHeight')
-'''
+# # 4. Extract attribute values
+# links = page.evaluate('''() => {
+#     # return Array.from(document.querySelectorAll('a'))
+#         # .map(a => a.href)
+# }''')
+
+# # 5. Get page dimensions
+# scroll_y = page.evaluate('window.scrollY')
+# full_height = page.evaluate('document.body.scrollHeight')

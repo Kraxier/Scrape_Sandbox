@@ -125,26 +125,26 @@ page.mouse.wheel(300, 0)  # Scroll right 300px
 '''
 
 
-r'''
-page.wait_for_function() - The 10% that handles 90% of waiting needs
-# 1. Wait for content to load after scroll
-page.mouse.wheel(0, 1000)
-page.wait_for_function('''() => {
-   #  return document.querySelectorAll('.item').length > 10
-}''')
 
-# 2. Wait for AJAX completion
-page.wait_for_function('''() => {
-    # return window.dataLoaded === true
-}''')
+# page.wait_for_function() - The 10% that handles 90% of waiting needs
+# # 1. Wait for content to load after scroll
+# page.mouse.wheel(0, 1000)
+# page.wait_for_function('''() => {
+#    #  return document.querySelectorAll('.item').length > 10
+# }''')
 
-# 3. Wait for scroll position
-page.mouse.wheel(0, 1500)
-page.wait_for_function('window.scrollY > 1000')
+# # 2. Wait for AJAX completion
+# page.wait_for_function('''() => {
+#     # return window.dataLoaded === true
+# }''')
 
-# 4. Wait for element state change
-page.wait_for_function('''() => {
-   #  const el = document.querySelector('.status');
-    # return el && el.innerText.includes('Complete');
-}''')
-'''
+# # 3. Wait for scroll position
+# page.mouse.wheel(0, 1500)
+# page.wait_for_function('window.scrollY > 1000')
+
+# # 4. Wait for element state change
+# page.wait_for_function('''() => {
+#    #  const el = document.querySelector('.status');
+#     # return el && el.innerText.includes('Complete');
+# }''')
+

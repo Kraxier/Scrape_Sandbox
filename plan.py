@@ -1,10 +1,12 @@
-
+# venv_PS_Toscrape\Scripts\activate
 r'''
 Plan for Hybrid Approach at Things 
 Stacking the Concepts after Applying 
 80/20 Rule DONT FORGET THIS STUFF 
 
 Using the Guide of playwright_toscrape_progression thing 
+
+
 
 --------------------------
 
