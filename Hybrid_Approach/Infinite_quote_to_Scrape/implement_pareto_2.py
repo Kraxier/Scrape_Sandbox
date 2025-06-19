@@ -2,6 +2,8 @@
 
 from playwright.sync_api import sync_playwright, Playwright
 from urllib.parse import urljoin
+import time
+
 
 
 def run(playwright: Playwright):
@@ -27,11 +29,33 @@ def run(playwright: Playwright):
 
     # _________________________ New Version of Code  V1 _________________________
 
+    # Calculate elapsed time
+    start_time = time.time()
+    initial_load_time = time.time() - start_time    
     page.wait_for_selector(".quote", state="attached") # Wait the Page to Load 
-    quote_count = len(page.query_selector_all(".quote")) # Counting the Quotes
+    quote_initial_count = len(page.query_selector_all(".quote")) # Counting the Quotes
+
+    
+    
+    
     print(f"New Count for the Quote of the Page:{quote_count}")
+    # Counting How many Seconds to load the initial quote counts 
+    print(f"Initial quotes loaded: {quote_initial_count} | Time taken: {initial_load_time:.2f} seconds")
+
+
+    # Scrolling from the Top to Bottom Thing 
     page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-   
+
+    # Starting another Time time Thing
+    start_time = time.time()
+
+    # This Code is the condition of waiting the .quote of how many is the initial quote count at things 
+    page.wait_for_function(f"""() => {{
+    return document.querySelectorAll('.quote').length > {quote_initial_count};
+    }}""")
+    new_load_time = time.time() - start_time
+    final_count = len(page.query_selector_all(".quote"))
+    print(f"New quotes loaded: {final_count - quote_initial_count} | Time taken: {new_load_time:.2f} seconds")
 
     # I need Detection for the New Content 
     new_height = page.evaluate("document.body.scrollHeight")
@@ -39,6 +63,12 @@ def run(playwright: Playwright):
     print(f"New Height of the Page:{new_height}")
     # ____________________ First Version of Waiting ____________________ 
     page.wait_for_timeout(3000) # brief pause for content to load
+    r'''3 Seconds is the Sweet Spot
+    Maybe i need to adjust at things a combination based on both of things and also the implementation of things 
+    '''
+
+  
+
 
     # ____________________ Second Version of Waiting ____________________
     # page.wait_for_function("""() => {
@@ -197,5 +227,65 @@ For infinite scroll:
     First verify new content exists (conditional wait)
     Then allow time for full batch loading (timeout)
     May need multiple scroll+wait cycles for all content
+
+Core Concept Applies Universally
+Most interactive websites use:
+    AJAX (loading content after page load)
+    Lazy-loading (loading when visible)
+    Infinite scroll (loading more when scrolling)
+    Animations/Transitions (elements appearing with delays)
+
+Your testing approach works for all these cases.
+Combine multiple wait strategies
+Add reasonable timeouts
+Verify actual content state, not just DOM existence
+'''
+
+
+# Absolutely! Prioritizing functionality over premature optimization is a smart approach
+# I can work on Optimization later 
+# I'm really dependent on you in terms of asking a question instead of Experimenting and Applying i should make a rule in terms of Just applying things
+
+
+
+############################################### Realization in Working with AI ######################################################################
+# Dependent On AI
+
+# Read documentation (Playwright docs are excellent)
+# Write experimental code in small chunks
+# Run frequent tests to observe behavior
+# Goal: Understand the problem space before asking AI
+
+# Use AI when:
+r'''
+You're stuck after 15-30 mins of trying
+
+Need best practices for a solved pattern
+
+Want multiple approaches to compare
+'''
+
+# Deep Understanding (Prevent Dependency)
+r'''
+When AI provides a solution:
+
+    Research why it works (read docs for new methods)
+    Break it down to fundamentals
+    Modify parameters to see how behavior changes
+    Bookmark official documentation for key concepts
+'''
+
+# WorkFlow
+r'''
+1. Define Scrapping Goal 
+2. Can Implement This in Basics Version?
+    - If Yes Build Initial Version 
+    - If No Read the Documentation (Habits for Reading Documentation Stuff)
+3. Initial Version
+    - If It is working Can you Optimize it? 
+        IF So then Document the Damn Learning for that 
+    - IF is not Working Analyze in Specific Failure (Spend 15- 30 Minutes on My Own First)
+        Then ASk AI if you can't solve it
+
 
 '''
