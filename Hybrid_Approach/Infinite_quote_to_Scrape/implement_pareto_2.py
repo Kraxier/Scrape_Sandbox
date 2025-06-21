@@ -38,7 +38,7 @@ def run(playwright: Playwright):
     
     
     
-    print(f"New Count for the Quote of the Page:{quote_count}")
+    print(f"New Count for the Quote of the Page:{quote_initial_count}")
     # Counting How many Seconds to load the initial quote counts 
     print(f"Initial quotes loaded: {quote_initial_count} | Time taken: {initial_load_time:.2f} seconds")
 
