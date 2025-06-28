@@ -25,7 +25,11 @@ print(f"Printing the Random Number Between the Data in Keys {random_num}")
 
 # Learning this is also require getting the random keys and random data inside that time thing 
 random_key = random.choice(list(base_times.keys()))
-print(f"Printing the random Keys in the Dictionary itself {random_key}")
+print(f"Printing the random Keys in the Dictionary itself which is: {random_key}")
+
+min_time, max_time = base_times["think"]
+random_num = random.uniform(min_time, max_time)
+print(f"Printing the Random Number Between the Data in Keys {random_num}")
 
 # Basically i can randomize the Human Bot that i'm Creating thing but this is based only on time thing
 
