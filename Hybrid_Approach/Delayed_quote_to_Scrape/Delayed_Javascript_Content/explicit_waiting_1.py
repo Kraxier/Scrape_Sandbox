@@ -39,23 +39,14 @@ def run(playwright: Playwright):
         .first.wait_for() → Explicitly waits for the first quote to exist/be visible.
         .all() → After waiting, safely extracts all quotes (since we know the page is ready).
 
-        Considering the Challenge off 
-        Content loads unevenly (some elements appear faster than others).
-        Lazy-loading/AJAX fetches data in chunks (e.g., infinite scroll).
-        Dynamic pages render elements at different times.
+
         '''
 
         # Other Code 
 
         # Wait for a Minimum Count of Elements
         r'''
-        page.wait_for_function(
-    """(selector, minCount) => {
-        return document.querySelectorAll(selector).length >= minCount;
-    }""",
-    args=[".quote", 5]  # Wait for at least 5 quotes
-)
-        quotes = page.locator(".quote").all()
+
         '''
 
         # Hybrid Approach Checking if everything is loaded 
@@ -95,7 +86,6 @@ from playwright.sync_api import expect
 
 # 1. Basic presence
 page.wait_for_selector(".target-element")
-
 
 # Wait for the elements to appear in the DOM part 
 # Use Case is when you need to confirm if the elemenet are loaded 
