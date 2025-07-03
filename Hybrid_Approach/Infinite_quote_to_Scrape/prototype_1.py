@@ -59,18 +59,84 @@ def human_scrolling(page):
         Render Timing: DOM updates happen asynchronously after scrolling
         Scroll Chaining: Browsers limit consecutive scroll operations
     '''
-    for x in range(5):
-        scroll_pos = page.evaluate("window.scrollY") 
-        print(f"Initial Scroll Positon of the Page is {scroll_pos}")
-        page.mouse.wheel(0, 895)
-        scroll_pos = page.evaluate("window.scrollY") 
-        print(f"Final Scroll Positon of the Page is {scroll_pos}")
-        print()
-def data_extraction(page):
-    # Experimenting on Data Extraction on the Website while it Scrolling 
-    # So i needed to Consider the Waiting Part here 
+
+    # for x in range(5):
+    #     # prev_scroll_height = page.evaluate("document.body.scrollHeight")
+    #     scroll_pos = page.evaluate("window.scrollY") 
+    #     print(f"Initial Scroll Positon of the Page is {scroll_pos}")
+    #     page.mouse.wheel(0, 895)
+    #     # After Adding this line of Code it scroll for some of the things but it is not smoothly scrolling things 
+    #     page.wait_for_load_state("networkidle", timeout=3000)
+    #     scroll_pos = page.evaluate("window.scrollY") 
+    #     print(f"Final Scroll Positon of the Page is {scroll_pos}")
+    #     print()
+
+    r'''
+    # This Solution is Stupid Man 
+        1. Creating a Condition where i need to keep a scrolling whenever there are new content after scrolling things better than timeout i think
+        - because i need to keep counting the quotes making the code longer
+    
+    # Another Solution 
+        2. Adding the numbers between new Height of the Page and using that as Conditions
+    '''
+    
+    # I observe the code got bigger based on this stuff 
+    # Adding to the state to attached is really necessary 
+    r'''
+    I should only add it once because it only get the first one 
+    '''
     page.wait_for_selector(".quote", state="attached")
-    pass
+    initial_height_page = page.evaluate("document.body.scrollHeight")
+    initial_scroll_pos = page.evaluate("window.scrollY")
+    print(f"Initial Scroll Positon of the Page is {initial_scroll_pos}")
+    print(f"Initial Height Positon of the Page is {initial_height_page}")
+
+
+    r'''
+    ✅ What's Really Going On
+        This is typical of a lazy-loading/infinite scroll page that loads:
+        New content only after reaching a certain point
+        Content in batches, triggered by being near the bottom of current content
+        Sometimes with delays, depending on backend or throttling
+    '''
+    scroll_pause_time = 1  # seconds
+    while True:
+        page.mouse.wheel(0, 895)
+        time.sleep(scroll_pause_time)
+        page.wait_for_load_state("networkidle", timeout=5000)
+        new_height_page = page.evaluate("document.body.scrollHeight")
+        new_scroll_pos = page.evaluate("window.scrollY")
+        print(f"Scroll: {new_scroll_pos}, Height: {new_height_page}")
+
+        if new_height_page >= 15848:
+            page.mouse.wheel(0, 895)
+            print("I Reached the Last Page")
+            print(f"Scroll: {new_scroll_pos}, Height: {new_height_page}")
+            
+    # I let the Deepseek and Chatgpt Analyze my Code:
+    r'''
+    1. Remove the Magic Numbers Which means Avoid hard‑coding a terminal height (15848)—that value can change whenever the site content changes or you scroll on a different viewport
+        *  Instead, detect when no new content is coming
+        * Aka Dynamic Height Tracking  Works for any page size/resolution
+    2. Use Exponential Backoff or Adaptive Pauses
+        * Rather than a fixed 1 s pause, you can start small and back off if the page takes longer:
+        * Combines network idle + short DOM wait
+        * Handles both AJAX and DOM-render delays
+    '''
+    
+
+
+
+def data_extraction(page):
+    page.wait_for_selector(".quote", state="attached")
+    quote_count = 0 
+    quotes = page.locator(".quote .text").all()
+    for quote in quotes: 
+        print(quote.text_content())
+        quote_count += 1
+        print(f"Quote Count: {quote_count}")
+        print()
+    
 def run(playwright: Playwright):
     base_url = "https://quotes.toscrape.com/scroll"
     chromium = playwright.chromium
@@ -81,11 +147,12 @@ def run(playwright: Playwright):
     page = context.new_page()
     page.goto(base_url)
     
-     
+    
     human_scrolling(page)
     
     
 
+    # data_extraction(page)
     input()
     page.close() 
     browser.close()
