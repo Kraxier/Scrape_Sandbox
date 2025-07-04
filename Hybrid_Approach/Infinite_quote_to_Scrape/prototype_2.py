@@ -18,19 +18,123 @@ def human_scrolling(page):
     print(f"Initial Scroll Positon of the Page is {initial_scroll_pos} and Initial Height Positon of the Page is {initial_height_page} ")
 
 
-    scroll_pause_time = 1  # seconds
+    scroll_pause_time = 2  # seconds
+   
+    # Using this as Dynamic Thing Thing 
+    # countering_loop_height = 0 
+    # counter = 0 
+
+    # Attempts 
+    scrolling_attempt = 3
+
     while True:
+        page.wait_for_load_state("networkidle", timeout=5000)
+        prev_scroll_pos = page.evaluate("window.scrollY")
+        prev_height_page = page.evaluate("document.body.scrollHeight")
+        print(f"Previous Scroll {prev_scroll_pos} Previous Height {prev_height_page}")
+
         page.mouse.wheel(0, 895)
         time.sleep(scroll_pause_time)
-        page.wait_for_load_state("networkidle", timeout=5000)
-        new_height_page = page.evaluate("document.body.scrollHeight")
         new_scroll_pos = page.evaluate("window.scrollY")
-        print(f"Scroll: {new_scroll_pos}, Height: {new_height_page}")
+        new_height_page = page.evaluate("document.body.scrollHeight")
+        print(f"New Scroll {new_scroll_pos} New Height {new_height_page}")
 
-        if new_height_page >= 15848:
-            page.mouse.wheel(0, 895)
-            print("I Reached the Last Page")
-            print(f"Scroll: {new_scroll_pos}, Height: {new_height_page}")
+        # print(f"Scroll: {new_scroll_pos}, Height: {new_height_page}")
+
+        
+        # if new_height_page > prev_height_page:
+        #     # Continue Scrolling 
+        #     pass
+        # if new_height_page < prev_height_page
+        
+        # countering_loop_height = prev_height_page
+        # print(f"Observing Countering Loop Height Thing: {countering_loop_height}")  
+
+        # Problem with the Code is The Attempt Thing to Early To Break 
+        # Scrolling Position will never be Equal i think 
+        if new_height_page == prev_height_page:
+            if new_scroll_pos == prev_scroll_pos:
+                print("We Reached the Last Page")
+                break
+
+        print()
+        quotes = page.locator(".quote .text").all()
+        seen_quotes = set()
+        for quote in quotes: 
+            seen_quotes.add(quote.text_content())
+            # print(quote.text_content())
+            # quote_count += 1
+            # print(f"Quote Count: {quote_count}")
+            # print()
+        # print(f"Outside of Loop Quote Count: {quote_count}")
+        length_quote = len(seen_quotes)
+        print(f"The Length of the Quote that i Currently Scraped: {length_quote}") # Total Quote is 100 Thing Using the 100 As Condition seems Bad because it is a fixed Number to
+        print()
+    
+        
+        # What is Good Conditional After Getting the Initial Height and the Final Height  
+        r'''
+        The Problem first i needed to solve is "15848" 
+        I needed to Keep it scrolling Until there are no New Content at things 
+        Based on my Code it Keep Scrolling until it Reaches to 15848 Thing Geting the Height  
+
+        First Condition if Scrolling Position is Equal to Height of the Page # There are no Equal because if it is Endless Running it will never be equal 
+        Second Condition if the Height of the page Doesn't Change means it keep repeating 
+            Problem in Second Condition until the scroll doesn't reach a certain point Height Will not Change 
+                Scroll: 5831.2001953125, Height: 8022
+                Scroll: 6726.39990234375, Height: 8022
+
+        Height Change Depends on Where the Scroll Position is so it is very relative to each other 
+        Height Change Where you Reaches a Certain Point 
+
+        Third Condition Where it Keeps Extracting the Number of Quotes if it is Steadily increasing it means it still loading a content 
+        Also Maybe Adding an Attempt in While Loop to be more Robust at Things 
+
+        Chatgpt and Deepseek Reconmmended Height Dynamic Tracking (I had No Idea How to Do that Yet but Maybe Later)
+
+        '''
+
+        # First Condition to Stopped 
+        # if new_height_page >= 15848:
+        #     page.mouse.wheel(0, 895)
+        #     print("I Reached the Last Page")
+        #     print(f"Scroll: {new_scroll_pos}, Height: {new_height_page}")
+
+        # Second Condition to Stopped Using the Number of Quotes good for the Limitation in Scrapping things 
+        # if length_quote == 100:
+        #     print(f"No More Content To Extract")
+        #     print(f"We Reached the Last Page")
+        #     break 
+        
+        # Third Condition to Stopped Which is Using the Scrolling Position i think this is not good for the things because it will just keep scrolling 
+        # Fourth Condition is how to do Detecting Height Thing for Dynamic Height Tracking 
+        r'''
+        What is my Observation so far ?
+        Height Will Change after the Scrolling Position Reaches a Certain Point that is a good Detector 
+        Height Will not CHange if you reach Fully at the Bottom of things 
+
+        Get the Previous Height 
+        Scroll 
+        Get the New Height 
+        Compare the Previous Height to New Height and if new Height is Greater than Previous Height that means a New Loaded Content 
+            I needed to be Careful on this because it will not Update the new height if the Scrolling Position Doesn't reaches a Certain Point 
+                - Solution is if the Comparing the Previous Height of the Scrolling Position to New Height of Scrolling Position if it is still increasing (Greater than)
+                it means the Loop Will Continue 
+        
+        When will it Stop? 
+            If the Previous Height is Equal to New Height (Maybe Adding the Attempts in terms of Scrapping things ) i Should Break the Damn Loops 
+
+        '''
+
+        # if new_height_page == countering_loop_height:
+        #     print()
+        #     print("They Are Same Period of Time")
+        #     counter += 1
+        #     print(f"Counter Number Currently are {counter}")
+        #     print()
+
+
+
             
     # I let the Deepseek and Chatgpt Analyze my Code:
     r'''
@@ -113,8 +217,7 @@ def run(playwright: Playwright):
     page = context.new_page()
     page.goto(base_url)
     
-    scroll_to_bottom(page)
-    # human_scrolling(page)
+    human_scrolling(page)
     
     
 
@@ -217,3 +320,7 @@ c) No Safety Mechanism
     Risk: Infinite loops if content keeps loading
     Result: Program hangs indefinitely
 '''
+
+
+
+# Getting Feedback Based on my Damn Shitty Code and MY Thought Proccess Involving Scrapping Things 
