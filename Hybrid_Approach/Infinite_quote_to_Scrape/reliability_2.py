@@ -35,6 +35,9 @@ Why it matters: Almost every site injects new DOM nodes for each batch of conten
 
 2. Bottom‑of‑Page Detection (±10 px)
 A one‑liner JS check to know “I’m at the very end of the document”:
+
+
+# Terms of Analyzing the Code There are Too Much Damn Text In Here 
 ''' 
 
 def human_scrolling(page):
@@ -124,7 +127,7 @@ def human_scrolling(page):
         print(f"Updated Counting of Quotes : {counting_quotes}")
         print(f"A Non Updated Counting of Quotes {initial_count_quotes}")
 
-        # The Problem is Counting the Quotes it Compare itself to the new Values
+        
         if counting_quotes == initial_count_quotes:
             scrolling_fail += 1
             print(f"No new quotes found. Fail count: {scrolling_fail}")
