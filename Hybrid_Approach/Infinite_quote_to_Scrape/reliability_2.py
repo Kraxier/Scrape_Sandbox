@@ -33,8 +33,8 @@ Solving a Robust Termination
 You’re already tracking .quote count and bailing after N “no‑new‑items” scrolls. This is by far the simplest, most universally applicable check.
 Why it matters: Almost every site injects new DOM nodes for each batch of content. If your count doesn’t budge after 2–3 scrolls, you’re almost certainly done.
 
-2. Bottom‑of‑Page Detection (±10 px)
-A one‑liner JS check to know “I’m at the very end of the document”:
+        3. Bottom‑of‑Page Detection (±10 px)
+        A one‑liner JS check to know “I’m at the very end of the document”:
 
 
 # Terms of Analyzing the Code There are Too Much Damn Text In Here 
