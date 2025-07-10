@@ -1,0 +1,138 @@
+from playwright.sync_api import sync_playwright, Playwright
+from urllib.parse import urljoin
+import random
+import time
+
+
+
+r'''
+Mostly Used Modules are "Random" and "Time"
+    I need to Debug Things
+    
+
+Testing Area for Bots: https://botscan.com/
+Defining the Goal in Human Stealth Mode or Human Micmicing 
+Random scroll distances (700-1000px)
+Variable pauses (1.5-2.5s)
+Mimics natural reading patterns
+
+1. Understanding the Problem 
+
+What is the Problem?
+    1. Some of the Website can Detect Bots based on how Playwright Moves
+    2.  You will get blocked if you are consistent in your actions 
+
+Why do We need to Solve the Problem?
+    1. Well Because We need to scrape a website properly and we don't want to get blocked
+    2. 
+Breaking Down the Problem 
+
+
+2. Research and Refine the Problem
+Note 80% human-like detection avoidance with 20% effort 
+
+1. Ip and Proxy is the No. 1 Best Way to Do things 
+2. Headers Perfection Adding Different User Agents is the Thing 
+3. Basic Behaviour of the Bot 
+
+Focusing on Basic Behaviour of the bot is the Thing Here 
+
+Delaying action of the Bot 
+Implement acceleration/deceleration in scrolling
+Add random micro-variations (±10%) to all timings
+Include "thinking time" before critical actions
+Use different delay profiles for different actions
+
+Varying Speed in Human Scrolling 
+    1. Human Like Scrolling Acceleration
+    2. Horizontal Variation
+    3. Vary Wait Time Based on Scroll Speed 
+
+Figuring out the Level of Complexity and Breaking Down the Steps that i needed to do 
+Going Back to the File 
+    1. basic_python.py
+    2. basic_python_2.py
+    3. Relearning the Import Module of "Time" and Observe the Randomness of Thing the seconds it take to do the Stuff 
+    4. Focusing on Base_Time first and observe the Randomness and Seconds for it  takes 
+    5. Putting it to playwright 
+    6. Adding the Scrolling Behaviour in Playwright 
+        a. Agressive Scrolling in Playwright 
+        b. Sinosidial Pattern 
+    
+
+'''
+
+
+def human_scrolling(page):
+    page.wait_for_selector(".quote", state="attached")
+    initial_height_page = page.evaluate("document.body.scrollHeight")
+    initial_scroll_pos = page.evaluate("window.scrollY")
+    print(f"Initial Scroll Positon of the Page is {initial_scroll_pos} and Initial Height Positon of the Page is {initial_height_page} ")
+    print()
+    print()
+
+    scroll_pause_time = 2  
+    scrolling_attempt_max = 20
+    scrolling_attempt = 0
+    scrolling_max = 5
+    scrolling_fail = 0
+    
+
+    initial_count_quotes = len(page.locator(".quote .text").all())
+    while scrolling_attempt_max > scrolling_attempt:
+        page.wait_for_load_state("networkidle", timeout=5000)
+        prev_scroll_pos = page.evaluate("window.scrollY")
+        prev_height_page = page.evaluate("document.body.scrollHeight")
+
+        print()
+
+        page.mouse.wheel(0, 895)
+        time.sleep(scroll_pause_time)
+        new_scroll_pos = page.evaluate("window.scrollY")
+        new_height_page = page.evaluate("document.body.scrollHeight")
+
+        print()
+
+        
+
+        if new_height_page == prev_height_page:
+            if new_scroll_pos == prev_scroll_pos:
+                print("We Reached the Last Page")
+                # break
+        scrolling_attempt += 1
+
+        counting_quotes = len(page.locator(".quote .text").all())
+        print(f"Updated Counting of Quotes : {counting_quotes}")
+        print(f"A Non Updated Counting of Quotes {initial_count_quotes}")
+
+        
+        if counting_quotes == initial_count_quotes:
+            scrolling_fail += 1
+            print(f"No new quotes found. Fail count: {scrolling_fail}")
+            if scrolling_fail == scrolling_max:
+                break
+        else:
+
+            scrolling_fail = 0
+            initial_count_quotes = counting_quotes
+            print(f"There are New Quotes Found so It will Reset to: {scrolling_fail}")
+            print(initial_count_quotes)
+            
+def run(playwright: Playwright):
+    base_url = "https://quotes.toscrape.com/scroll"
+    chromium = playwright.chromium
+    browser = chromium.launch(headless=False) 
+    context = browser.new_context(
+        viewport={"width": 1366, "height": 768}  
+    )
+    page = context.new_page()
+    page.goto(base_url)
+    human_scrolling(page)
+    # data_extraction(page)
+    input()
+    page.close() 
+    browser.close()
+
+
+with sync_playwright() as playwright:
+    run(playwright)
