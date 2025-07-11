@@ -61,7 +61,21 @@ Going Back to the File
     
 
 '''
-
+delay_profiles = {
+    "pre_click": (1.2, 3.5),    # Decision-making before action
+    "post_click": (0.1, 0.4),   # Natural reaction after click
+    "scroll": (0.2, 1.5),       # Reading time during scroll
+    "typing": (0.08, 0.15),     # Per-key typing speed
+    "page_load": (0.8, 4.0),    # "Reading" after navigation
+    "think": (3.0, 8.0)         # Strategic pauses
+}
+# What This Code Does is to pick the numbers and sleep things out to delay the actions
+# I needed to Completely Strategize Where i'm going to put the code in the website
+def human_delay(context: str) -> None:
+    """Delay based on behavioral context"""
+    min_time, max_time = delay_profiles[context]
+    delay = random.uniform(min_time, max_time)
+    time.sleep(delay)
 
 def human_scrolling(page):
     page.wait_for_selector(".quote", state="attached")
