@@ -71,6 +71,12 @@ delay_profiles = {
 }
 # What This Code Does is to pick the numbers and sleep things out to delay the actions
 # I needed to Completely Strategize Where i'm going to put the code in the website
+# Understanding the Function 
+r'''
+("context: str") -> None
+
+Working in Multiple Functions at the Same time Especially in human_scrolling functions, I may Add Data Extraction on the code 
+'''
 def human_delay(context: str) -> None:
     """Delay based on behavioral context"""
     min_time, max_time = delay_profiles[context]
@@ -131,7 +137,13 @@ def human_scrolling(page):
             initial_count_quotes = counting_quotes
             print(f"There are New Quotes Found so It will Reset to: {scrolling_fail}")
             print(initial_count_quotes)
-            
+    print("Function: Human_Scrolling_Done")
+def data_extraction(page):
+    quotes_text = page.locator(".quote .text").all()
+    for quote in quotes_text:
+        print(quote.text_content())
+        print()
+    
 def run(playwright: Playwright):
     base_url = "https://quotes.toscrape.com/scroll"
     chromium = playwright.chromium
@@ -142,6 +154,7 @@ def run(playwright: Playwright):
     page = context.new_page()
     page.goto(base_url)
     human_scrolling(page)
+    data_extraction(page)
     # data_extraction(page)
     input()
     page.close() 
@@ -150,3 +163,43 @@ def run(playwright: Playwright):
 
 with sync_playwright() as playwright:
     run(playwright)
+
+r'''
+things to Do Learn to 
+1. Learn to Simulate Interleaving Things in terms of Function "simulation_2_Function.py"
+
+
+2. Getting only the new Quotes of things per extractions (I had no idea how to do that )
+Position-Based Slicing (90% effective)
+https://chat.deepseek.com/a/chat/s/01f5989b-e21a-452e-a4e8-5282b2c0977b
+https://chatgpt.com/c/6872c30a-db10-8013-892e-8e3c65d712ff
+Works for sites that append content sequentially (most infinite scroll implementations)
+
+
+3. Apply that in Playwright --> Scrolling, Extraction, Scrolling, Extraction 
+
+def optimized_scrape(page):
+    all_quotes = []
+    last_position = 0
+    
+    while True:
+        # Scroll and wait for new content
+        page.evaluate(f"window.scrollTo(0, {last_position + 1000})")
+        page.wait_for_timeout(2000)  # Network-aware wait better
+        
+        # Get ONLY new quotes
+        quotes = page.query_selector_all(".quote")[last_position:]
+        if not quotes: 
+            break
+            
+        for quote in quotes:
+            text = quote.query_selector(".text").inner_text()
+            all_quotes.append(text)
+        
+        last_position += len(quotes)
+4. Implement the Human Mimicing Behavior 
+    A. Pre-Action Delays (The 50% Solution)
+    B. Human-Like Mouse Movements (30% Solution)
+    C. Chunked Scrolling with Variable Pauses (20% Solution)
+And Then I'm Done At This Website 
+'''
