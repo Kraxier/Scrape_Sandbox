@@ -1,6 +1,7 @@
 # Learning to Data Exxtraction in terms of Position Based and Also Adding the Human Delay in the Proccess 
 r'''
 Extracting the Scroll
+0. How can i Switch to Different Function while the 
 1. position-based extraction where as you scroll you are getting only the New Quotes 
 2. Pre-Action Delays (The 50% Solution)
     Insert before EVERY interaction (click, type, etc.)
@@ -14,6 +15,20 @@ Extracting the Scroll
     Never scroll full page at once
     Vary scroll distance and speed
     Exponential pauses between chunks
+
+Switching the Function What is the Problem and Formulating the Problem 
+1. I want to run a different function while it is Running for example 
+    A. i want it to scroll a Function 
+    B. And then a Randomize Stop or Delays a Different Function 
+    C. A Function that get the Data and Extracting the Data 
+Both Deepseek and Chatgpt recommended "Threading" but i ask the question of should i go further to that road 
+    Chatgpt and Deepseek
+    Best Approach: Asynchronous (Async/Await)
+    Playwright’s async API lets you run multiple tasks concurrently in a single thread.
+
+This is the Problem That i been Doing 
+Yes! Concurrency is exactly what you need—running multiple tasks in overlapping time periods (not necessarily in parallel). 
+Since you're using Playwright for web scraping, here’s the best way to achieve concurrency for your goals:
 
 '''
 
