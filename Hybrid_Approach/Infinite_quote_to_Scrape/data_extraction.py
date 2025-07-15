@@ -1,4 +1,19 @@
 # Learning to Data Exxtraction in terms of Position Based and Also Adding the Human Delay in the Proccess 
+
+
+# To Do List I get Paralyze in terms of Doing Multiple Stuff i needed to Prioritize Things
+r'''
+Focusing on High Yield Results 
+    1. Data Extraction 
+        - We are collecting all the quotes on every scroll, which is inefficient. We should instead collect only the new quotes that appear after each scroll.
+        -  Fix This Parts on Every Scroll 
+        - Interleaving “scroll → extract → scroll → extract” is almost always better than doing all your scrolling up‑front and then dumping all the data at once.
+
+    2. Chunked Scrolling With Variable Pauses 
+    3. Pre Action Delays 
+    4. MHuman Like Mouse Movement 
+'''
+
 r'''
 Extracting the Scroll
 0. How can i Switch to Different Function while the 
@@ -29,6 +44,13 @@ Both Deepseek and Chatgpt recommended "Threading" but i ask the question of shou
 This is the Problem That i been Doing 
 Yes! Concurrency is exactly what you need—running multiple tasks in overlapping time periods (not necessarily in parallel). 
 Since you're using Playwright for web scraping, here’s the best way to achieve concurrency for your goals:
+
+
+The Problem in Concurrency is it is Async Thing and i don't want to get ahead of myself jumping from that so maybe i needed to delay things out in there 
+
+I think i will just randomize stuff Things in terms of Function like Scrolling and Pre Action Delay and Human Like Mouse Movement to simulate things 
+    - Focusing on Scrolling that there are much higher Ration than the Human Like Mouse Movement and Pre Action Delays +
+
 
 '''
 
