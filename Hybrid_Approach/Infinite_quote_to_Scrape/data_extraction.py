@@ -60,6 +60,77 @@ import random
 import time
 
 
+r'''
+How i can procceed to this part? 
+What is the Goal?
+position-based extraction where as you scroll you are getting only the New Quotes 
+
+
+page.evaluate('window.scrollBy(0, window.innerHeight)')
+    Scrolls by exactly one viewport height
+    More reliable than fixed pixel values (works across devices)
+    evaluate() executes JavaScript in the page context
+
+Data Merging
+for item in current_data:
+    if item not in all_data:
+        all_data.append(item)    
+
+
+Adding the Early Termination of the stuff 
+
+
+
+
+Problem 1 is Done i can do it  
+putting data_extraction inside of human_scrolling 
+They are both 2 Function 
+Basically i have a 2 Function let's call it "A" and "B" and i want to put "A" inside of "B" how i can do that in python ? 
+How i can put a Function to another Function, Will that able to run ?  
+
+problem 2 
+
+'''
+
+# def data_extraction(page):
+#     quote_item = []
+#     quotes_text = page.locator(".quote .text").all()
+#     for quote in quotes_text:
+#         # print(quote.text_content())
+#         if quote not in quote_item:
+#             quote_item.append(quote)
+#             print(quote) 
+#         print()
+r'''
+What is the Problem of the code here? 
+1. You're comparing quote (a Playwright Locator object) with items in quote_item (also Locator objects)
+    * What does it mean by Playwright Locator Object? 
+    # i think the problem lies on the printing the locator quote 
+    quotes = page.locator(".quote .text") results: <Locator frame=<Frame name= url='https://quotes.toscrape.com/scroll'> selector='.quote .text'
+    not the actual text content 
+2.Incorrect Appending:
+    You're storing locator objects instead of the actual text content
+3. 
+'''   
+
+# Second Version of data_extraction(page):
+def data_extraction(page):
+    quote_item = []
+    # Wait for quotes to be present first
+    page.wait_for_selector(".quote .text")
+    
+    quotes = page.locator(".quote .text").all()
+    for quote in quotes:
+        text_content = quote.text_content().strip()  # Get cleaned text
+        if text_content and text_content not in quote_item:  # Check for non-empty and unique
+            quote_item.append(text_content)
+            print(text_content)  # Print the actual text
+    
+    return quote_item  # Return the collected data for further use
+
+
+
+
 def human_scrolling(page):
     page.wait_for_selector(".quote", state="attached")
     initial_height_page = page.evaluate("document.body.scrollHeight")
@@ -87,7 +158,12 @@ def human_scrolling(page):
         time.sleep(scroll_pause_time)
         new_scroll_pos = page.evaluate("window.scrollY")
         new_height_page = page.evaluate("document.body.scrollHeight")
+        print()
 
+        print("Putting a Data Extraction Function")
+        print("Putting a Data Extraction Function")
+        print("Putting a Data Extraction Function")
+        data_extraction(page)
         print()
 
         
@@ -115,11 +191,7 @@ def human_scrolling(page):
             print(f"There are New Quotes Found so It will Reset to: {scrolling_fail}")
             print(initial_count_quotes)
     print("Function: Human_Scrolling_Done")
-def data_extraction(page):
-    quotes_text = page.locator(".quote .text").all()
-    for quote in quotes_text:
-        print(quote.text_content())
-        print()
+
 
 def run(playwright: Playwright):
     base_url = "https://quotes.toscrape.com/scroll"
