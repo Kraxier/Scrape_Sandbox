@@ -120,17 +120,21 @@ def data_extraction(page):
     page.wait_for_selector(".quote .text")
     
     quotes = page.locator(".quote .text").all()
+    print(f"🎯 Found {len(quotes)} quote elements in current DOM")  # DEBUG
     for quote in quotes:
         text_content = quote.text_content().strip()  # Get cleaned text
         if text_content and text_content not in quote_item:  # Check for non-empty and unique
             quote_item.append(text_content)
             print(text_content)  # Print the actual text
-    
+    print(f"📦 Returning {len(quote_item)} unique quotes from current extraction")
     return quote_item  # Return the collected data for further use
 
 
 
-
+r'''
+I quite notice that there are too much thing in a function that it is hard to read and stuff 
+like the block of code needs to figure out the why of each 
+'''
 def human_scrolling(page):
     page.wait_for_selector(".quote", state="attached")
     initial_height_page = page.evaluate("document.body.scrollHeight")
@@ -160,10 +164,13 @@ def human_scrolling(page):
         new_height_page = page.evaluate("document.body.scrollHeight")
         print()
 
+
+
         print("Putting a Data Extraction Function")
         print("Putting a Data Extraction Function")
         print("Putting a Data Extraction Function")
         data_extraction(page)
+
         print()
 
         
@@ -212,3 +219,88 @@ def run(playwright: Playwright):
 
 with sync_playwright() as playwright:
     run(playwright)
+
+
+r'''
+Extraction is happening during scrolling ✅
+You call data_extraction(page) inside your scrolling loop, which is correct.
+
+But extraction results are not stored ❌
+data_extraction(page)  # Return value is ignored!
+data_extraction() function creates a new empty list each time it's called, so:
+    It only returns quotes from the current batch
+    Previous quotes are discarded
+    No master list exists to collect all unique quotes
+
+counting_quotes = len(page.locator(".quote .text").all())
+But this counts elements, not unique quote texts. Duplicate text quotes would be counted as new.
+'''
+
+
+# def data_extraction(page):
+#     """Extracts quotes WITHOUT creating new list each time"""
+#     page.wait_for_selector(".quote .text")
+#     quotes = page.locator(".quote .text").all()
+#     quote_texts = []
+#     for quote in quotes:
+#         text_content = quote.text_content().strip()
+#         if text_content:
+#             quote_texts.append(text_content)
+#     return quote_texts  # Return only current batch
+
+
+
+# Accumulation of Results
+# all_quotes master list collects data across scrolls
+# data_extraction() only returns current batch
+# Explicit duplicate checking against master list
+# def human_scrolling(page):
+#     all_quotes = []  # MASTER LIST for all quotes
+#     max_attempts = 20
+#     consecutive_fails = 0
+#     max_consecutive_fails = 5
+    
+#     for attempt in range(max_attempts):
+#         # Scroll down
+#         page.mouse.wheel(0, 895)
+#         time.sleep(2)  # Allow content to load
+        
+#         # EXTRACT AND ACCUMULATE
+#         current_quotes = data_extraction(page)
+#         new_quotes = []
+        
+#         for quote in current_quotes:
+#             if quote not in all_quotes:  # Global duplicate check
+#                 all_quotes.append(quote)
+#                 new_quotes.append(quote)
+        
+#         print(f"Found {len(new_quotes)} new quotes")
+        
+#         # Termination check
+#         if not new_quotes:
+#             consecutive_fails += 1
+#             print(f"No new quotes ({consecutive_fails}/{max_consecutive_fails})")
+#             if consecutive_fails >= max_consecutive_fails:
+#                 break
+#         else:
+#             consecutive_fails = 0  # Reset counter
+        
+#         # Optional: Scroll position check
+#         current_pos = page.evaluate("window.scrollY")
+#         current_height = page.evaluate("document.body.scrollHeight")
+#         if current_pos + page.viewport_size["height"] >= current_height:
+#             print("Reached bottom of page")
+#             break
+    
+#     print(f"Total unique quotes: {len(all_quotes)}")
+#     return all_quotes  # Return accumulated results
+
+
+r'''
+        Problem with this is it only return quotes frm the current batch 
+        Previous quotes are discarded
+
+        return statement in Python What does that mean ? 
+        
+
+'''
