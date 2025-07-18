@@ -136,6 +136,9 @@ I quite notice that there are too much thing in a function that it is hard to re
 like the block of code needs to figure out the why of each 
 '''
 def human_scrolling(page):
+
+    all_quotes = []  # Master collection list
+
     page.wait_for_selector(".quote", state="attached")
     initial_height_page = page.evaluate("document.body.scrollHeight")
     initial_scroll_pos = page.evaluate("window.scrollY")
@@ -169,7 +172,17 @@ def human_scrolling(page):
         print("Putting a Data Extraction Function")
         print("Putting a Data Extraction Function")
         print("Putting a Data Extraction Function")
-        data_extraction(page)
+        current_quotes = data_extraction(page)  # Store return value
+        print(f"🔄 Received {len(current_quotes)} quotes from extraction")
+
+        # Track new unique quotes
+        new_count = 0
+        for quote in current_quotes:
+            if quote not in all_quotes:  # Check against master list
+                all_quotes.append(quote)
+                new_count += 1
+        
+        print(f"🌟 Added {new_count} new quotes | Total: {len(all_quotes)}")
 
         print()
 
@@ -198,6 +211,8 @@ def human_scrolling(page):
             print(f"There are New Quotes Found so It will Reset to: {scrolling_fail}")
             print(initial_count_quotes)
     print("Function: Human_Scrolling_Done")
+    print(f"🏁 Finished scrolling. Total unique quotes: {len(all_quotes)}")
+    return all_quotes  # Return accumulated results
 
 
 def run(playwright: Playwright):
@@ -209,9 +224,19 @@ def run(playwright: Playwright):
     )
     page = context.new_page()
     page.goto(base_url)
-    human_scrolling(page)
+    # human_scrolling(page)
     # data_extraction(page)
     # data_extraction(page)
+    final_quotes = human_scrolling(page)
+    print("\n" + "="*50)
+    print(f"🔥 FINAL RESULT: Collected {len(final_quotes)} unique quotes")
+    print("="*50 + "\n")
+    
+    # Optional: Save to file
+    # with open("quotes.txt", "w", encoding="utf-8") as f:
+    #     for i, quote in enumerate(final_quotes, 1):
+    #         f.write(f"{i}. {quote}\n")
+
     input()
     page.close() 
     browser.close()
