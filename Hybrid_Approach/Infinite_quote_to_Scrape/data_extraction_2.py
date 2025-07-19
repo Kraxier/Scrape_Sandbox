@@ -9,6 +9,7 @@ Refactoring the Code
 
 To Do List 
 1. Focusing in Human Scrolling thing 
+2. Fully Breaking Down Data_extraction_1.py Of What things it can do to work on data_extraction_2.py
 '''
 
 from playwright.sync_api import sync_playwright, Playwright
@@ -117,7 +118,73 @@ My Reflection in Using a Nested Fuction:
     Implementation: pre_action_delay() before every action
 '''
 
+r'''
+Practising the Habit of 
+    1. Code for Readability and Maintanability 
+        - Using Meaninful Names
+        - Keep Functions Small and Focused (Applying Single Responsibility of Function)
+        - Avoding Deep Nesting 
+        - Consistent Formating 
+        - Comment Why, Not What 
+
+Workflow and Proccess Habits 
+    1. Break Down the Task 
+    2. Estimate Realisticlly 
+        Provide Rational Behind Estimates
+    3. DocumentProactively - •	Maintain clear README
+    4. Master your Tools Learning IDE, Debugger, Terminal, And Profiler
+        - Picking an IDE 
+
+Personal Development and Habits
+    1. Continous Learning 
+        - Dedicating Time Learning 
+        - Read Watch Build and Experiment 
+    2. Embrace Feedback and Failure 
+        - Mistake as Learning Opportuintes 
+    3. Know when to ASk for Help 
+        - Try on your Own 
+        - Ask with Context showing what you tried 
+    4. Taking a Break and Step Away 
+        - To Solve Tough Problems a Pomodoro Technique Optimizing for Focused and Difuse Mode
+    5. 
+
+
+        
+'''
 
 # ======================
 def scrolling(page):
+    r'''
+    How the Bot Scroll 
+        1. 
+    '''
+    page.wait_for_selector(".quote", state="attached") # Wait for the Content to Load 
+    # Debugging Purposes Finding the Initial Height of Things 
+    # initial_height_page = page.evaluate("document.body.scrollHeight")
+    # initial_scroll_pos = page.evaluate("window.scrollY")
+    # print(f"Initial Scroll Positon of the Page is {initial_scroll_pos} and Initial Height Positon of the Page is {initial_height_page} ")
+    # initial_count_quotes = len(page.locator(".quote .text").all())
+
+
+    # Max Scrolling Attempt 
+    r'''
+    Why i Put Max Scrolling Attempt? 
+        To stop the Program in Scrolling if it Reach a 10 Maximum 
+        When will it return to 0 when Scrolling Attempt keeps counting ? 
+            If There are no Quotes 
+    '''
+    scrolling_attempt_max = 10 # For a Function maximum_termination
+    scrolling_attempt = 0 # For a Function maximum Termination 
+
+
+    def position_based_extracting(page):
+        pass
+    # def maximum_termination(page):
+    #     r'''
+    #     In This Part i want to Return False if the Page is Reach 10 Attempt Scrolling at Things the Maximum Part
+    #     Abondoinig the Idea of Putting a function for a maximum attempt because i can just put it in the while loop Part 
+    #     '''
+    #     pass
+    def stagnant_content_termination(page):
+        pass
     pass
