@@ -10,6 +10,8 @@ Refactoring the Code
 To Do List 
 1. Focusing in Human Scrolling thing 
 2. Fully Breaking Down Data_extraction_1.py Of What things it can do to work on data_extraction_2.py
+3. Learn to Read the History of Commit
+4. Learn to When to Commit 
 '''
 
 from playwright.sync_api import sync_playwright, Playwright
