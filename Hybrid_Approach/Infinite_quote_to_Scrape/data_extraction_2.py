@@ -177,6 +177,7 @@ def scrolling(page):
     '''
     scrolling_attempt_max = 10 # For a Function maximum_termination
     scrolling_attempt = 0 # For a Function maximum Termination 
+    
 
 
     def position_based_extracting(page):

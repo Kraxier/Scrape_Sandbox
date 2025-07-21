@@ -5,6 +5,16 @@ import random
 import time
 
 
+r'''
+To Do List
+1. Analyze the Third Terminations
+2. Analyze the data_extraction of Quotes 
+    3. Position Based Extracting 
+        - Extracting Content Based on current scroll position 
+        - It focuses on content currently in view or just loaded after a scroll action
+'''
+
+
 # Second Version of data_extraction(page):
 def data_extraction(page):
     quote_item = []
@@ -40,13 +50,7 @@ def human_scrolling(page):
     #||||||||||| Maximum Attempt First Termination |||||||||||
     scrolling_attempt_max = 20 # How many are the Max Scrolling 
     scrolling_attempt = 0 # How many Attempts that it Scrolls 
-
-    
-    
     scroll_pause_time = 2  
-    scrolling_max = 5
-    scrolling_fail = 0
-
     #||||||||||| Second Termination: Counting The Quotes |||||||||
     # Description: Counting the Quotes for Every Scroll, If the Quotes are not incrementally adding a new found quotes the program will terminate itself 
     # Description: 
@@ -58,22 +62,15 @@ def human_scrolling(page):
             - There are Buffer like scrolling_max and scrolling_fail to not terminate the program if there are no new quotes because the content can load sometimes and 
             take a while to load so it is very important to put some buffering
     '''
-
-
-
     #||||||||||| Second Termination: Counting The Quotes |||||||||
     initial_count_quotes = len(page.locator(".quote .text").all()) # Initial Counting of the Quotes 
-
-
-    
-
-
+    scrolling_max_termination = 5
+    scrolling_fail_buffer = 0
 
     while scrolling_attempt_max > scrolling_attempt:
         page.wait_for_load_state("networkidle", timeout=5000)
         prev_scroll_pos = page.evaluate("window.scrollY")
         prev_height_page = page.evaluate("document.body.scrollHeight")
-
         print()
 
         page.mouse.wheel(0, 895)
@@ -112,19 +109,39 @@ def human_scrolling(page):
 
         #||||||||||| Second Termination: Counting The Quotes ||||||||| 
         # Understanding These Conditions 
+        r'''
+        intial_count_quotes are outside of function so it just count the intial Count 
+        and if counting_quotes(Inside the While Loop) (Means It Keep Counting at things)
+
+        IF they have the same X amount of Number it means there are no quotes are found 
+        What is a good name scrolling_fail --> scrolling_fail_buffer  
+
+        Explaining the If Statement
+            if counting_quotes == initial_count_quotes: # If They have the same Number 
+                scrolling_fail_buffer += 1 # Adding the Buffering
+                print(f"No new quotes found. Fail count: {scrolling_fail_buffer}") # There are no New Quotes are Found 
+                if scrolling_fail_buffer == scrolling_max_termination: # if they have the same number of scrolling_max which is 5 after not getting any quotes 
+                    break # It will Simply Stop 
+            else: # If counting_quotes and initial_count_quotes are not the same number which means there are New Quotes that found 
+                scrolling_fail_buffer = 0 # It will Reset the Buffering 
+                initial_count_quotes = counting_quotes # Adding a initial_count_quotes # Which means incrementally adding a new quotes in it's memory 
+        Basically the code will break or terminate itself if there are no new Quotes are found after 5 retry of getting that Quotes 
+        '''
+        #||||||||||| Second Termination: Counting The Quotes ||||||||| 
         if counting_quotes == initial_count_quotes:
-            scrolling_fail += 1
-            print(f"No new quotes found. Fail count: {scrolling_fail}")
-            if scrolling_fail == scrolling_max:
+            scrolling_fail_buffer += 1
+            print(f"No new quotes found. Fail count: {scrolling_fail_buffer}")
+            if scrolling_fail_buffer == scrolling_max_termination:
                 break
         else:
-            scrolling_fail = 0
+            scrolling_fail_buffer = 0
             initial_count_quotes = counting_quotes
-            print(f"There are New Quotes Found so It will Reset to: {scrolling_fail}")
-            print(initial_count_quotes)
+            print(f"There are New Quotes Found so It will Reset to: {scrolling_fail_buffer}")
+            print(f" New Number for the Comparison counting_quotes and initial_count_quotes not 10 anymore: {initial_count_quotes}")
     
     #||||||||||| Maximum Attempt First Termination |||||||||||
     scrolling_attempt += 1 # Incrementing the Scroll Attempt to 20 Only Maybe i should change the Condition of this 
+    
     print("Function: Human_Scrolling_Done")
     print(f"🏁 Finished scrolling. Total unique quotes: {len(all_quotes)}")
     return all_quotes  # Return accumulated results
