@@ -7,12 +7,14 @@ import time
 
 r'''
 To Do List
-1. Analyze the Third Terminations
+1. Analyze the Third Terminations [Done]
 2. Analyze the data_extraction of Quotes 
     3. Position Based Extracting 
         - Extracting Content Based on current scroll position 
         - It focuses on content currently in view or just loaded after a scroll action
 '''
+
+#|||||||||||  Third Termination |||||||||||
 
 
 # Second Version of data_extraction(page):
@@ -68,19 +70,41 @@ def human_scrolling(page):
     scrolling_fail_buffer = 0
 
     while scrolling_attempt_max > scrolling_attempt:
-        page.wait_for_load_state("networkidle", timeout=5000)
+        # |||||||||||  Third Termination |||||||||||
+        page.wait_for_load_state("networkidle", timeout=5000) # Waits until the network is idle (i.e. no more network requests are ongoing), indicating the page has finished loading.
+        # Storing the Current Height and Scrolling Position 
         prev_scroll_pos = page.evaluate("window.scrollY")
         prev_height_page = page.evaluate("document.body.scrollHeight")
         print()
 
+        # Scrolling down to 895 Pixels 
         page.mouse.wheel(0, 895)
         time.sleep(scroll_pause_time)
+
+        # Getting the New Scrolling Position and New Height After it Scroll 
         new_scroll_pos = page.evaluate("window.scrollY")
         new_height_page = page.evaluate("document.body.scrollHeight")
+        
+        # 2 Condition to Work if after Scrolling and there are no new heights and no new Scroll posiition 
+        # It Will Break the While Loop means i'm at the End 
+        # This only Work if there are an End in the Things 
+
+        r'''
+        It’s Heuristic-Based (Not Foolproof)
+        You're assuming that:
+            * If scrollHeight doesn't increase and scrollY doesn't change after scrolling, the page has no more content.
+        But:
+            * Some pages load content in a delayed or batched manner — there may still be more data if you wait longer.
+            * JavaScript-heavy pages might not update scrollHeight correctly until some time has passed.
+
+
+        '''
+        if new_height_page == prev_height_page:
+            if new_scroll_pos == prev_scroll_pos:
+                print("We Reached the Last Page")
+                # break
+
         print()
-
-
-
         print("Putting a Data Extraction Function")
         print("Putting a Data Extraction Function")
         print("Putting a Data Extraction Function")
@@ -96,10 +120,9 @@ def human_scrolling(page):
         # print(f"🌟 Added {new_count} new quotes | Total: {len(all_quotes)}")
         # print()
 
-        if new_height_page == prev_height_page:
-            if new_scroll_pos == prev_scroll_pos:
-                print("We Reached the Last Page")
-                # break
+
+
+
         
         #||||||||||| Second Termination: Counting The Quotes ||||||||| 
         counting_quotes = len(page.locator(".quote .text").all())
