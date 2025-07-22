@@ -8,27 +8,76 @@ import time
 r'''
 To Do List
 1. Analyze the Third Terminations [Done]
-2. Analyze the data_extraction of Quotes 
+2. Analyze the data_extraction of Quotes [Done]
     3. Position Based Extracting 
         - Extracting Content Based on current scroll position 
         - It focuses on content currently in view or just loaded after a scroll action
+4. Saving data in CSV Files 
+5. Creating and Mimicing Human Behaviour 
+    * Pausing 
+    * Scrolling 
+6. Done
+        
 '''
 
-#|||||||||||  Third Termination |||||||||||
+r'''
+Understanding Position Based Extracting: 
+Extracting based on the current Scroll Position of the Page:
+    Content currently in the viewport (visible area of the browser).
+    Dynamically loaded content after a scroll action (common in infinite-scroll pages). # This Check the Current Practice of Mine 
+
+This is the Best Way for Ifinite Scrolling 
+    In terms of Efficiency 
+        A. Proccess only Visible Content 
+        B. Avoid Storing Thousands of off-screen Elements 
+    Realistic Simulation by passing Anti bot Detection 
+    Work with Dynamics Sites like React and Angular where content loads on scroll
+
+Challenges:
+    1. Scroll Timing 
+        - Require Precise wait_for_selector() or wait_for_function() calls after scrolling to ensure content loads.
+        - Elements may unload/reload during scrolling (common in virtualization).
+        - Logic to track scroll depth/break conditions is needed.
+    2. Elements May Unload or Reload During scrolling (Not a Case of Mine)
+    3. Position Trackig Logic to Track Scroll Depth/Break Condition is Needed 
+
+Conclusion: Basically as i scroll i also extracting the quotes of it
 
 
+1. Mimicing Human Behaviour 
+    A. Chunked Scrolling with Variable Pauses (20% Solution)
+        Never scroll full page at once
+        Vary scroll distance and speed
+        Exponential pauses between chunks
+    B. Pre-Action Delays (The 50% Solution)
+        Insert before EVERY interaction (click, type, etc.)
+        Why it matters: Bots act instantly, humans hesitate
+        Implementation: pre_action_delay() before every action
+    C. Human-Like Mouse Movements (30% Solution)
+        Curved paths instead of straight lines
+        Variable speed during movement
+        Why it matters: Straight-line movement is #1 bot indicator 
+
+   
+Let's Go To Mimicing Human Behaviour First Because it Depends on the Scrolling Behaviour
+And then i needed to do Scroll Timing and Position Tracking which is very quote nice because i will also learn 
+Waititing and Expect 
+
+'''
+
+
+
+#||||||||||| Analyze Data Extraction |||||||||||
 # Second Version of data_extraction(page):
 def data_extraction(page):
     quote_item = []
-    # Wait for quotes to be present first
-    page.wait_for_selector(".quote .text")
-    
-    quotes = page.locator(".quote .text").all()
-    print(f"🎯 Found {len(quotes)} quote elements in current DOM")  # DEBUG
-    for quote in quotes:
+    page.wait_for_selector(".quote .text")  # Wait for quotes to be present first
+    quotes = page.locator(".quote .text").all() # Locating the Quotes getting Everything 
+    print(f"🎯 Found {len(quotes)} quote elements in current DOM")  # Getting How many Locator Found 
+    for quote in quotes: # Iterating for Every Quotes 
         text_content = quote.text_content().strip()  # Get cleaned text
         if text_content and text_content not in quote_item:  # Check for non-empty and unique
-            quote_item.append(text_content)
+            quote_item.append(text_content) 
             print(text_content)  # Print the actual text
     print(f"📦 Returning {len(quote_item)} unique quotes from current extraction")
     return quote_item  # Return the collected data for further use
@@ -81,14 +130,13 @@ def human_scrolling(page):
         page.mouse.wheel(0, 895)
         time.sleep(scroll_pause_time)
 
+        # |||||||||||  Third Termination |||||||||||
         # Getting the New Scrolling Position and New Height After it Scroll 
         new_scroll_pos = page.evaluate("window.scrollY")
         new_height_page = page.evaluate("document.body.scrollHeight")
-        
         # 2 Condition to Work if after Scrolling and there are no new heights and no new Scroll posiition 
         # It Will Break the While Loop means i'm at the End 
         # This only Work if there are an End in the Things 
-
         r'''
         It’s Heuristic-Based (Not Foolproof)
         You're assuming that:
@@ -96,34 +144,26 @@ def human_scrolling(page):
         But:
             * Some pages load content in a delayed or batched manner — there may still be more data if you wait longer.
             * JavaScript-heavy pages might not update scrollHeight correctly until some time has passed.
-
-
         '''
         if new_height_page == prev_height_page:
             if new_scroll_pos == prev_scroll_pos:
                 print("We Reached the Last Page")
                 # break
 
-        print()
-        print("Putting a Data Extraction Function")
-        print("Putting a Data Extraction Function")
-        print("Putting a Data Extraction Function")
-        current_quotes = data_extraction(page)  # Store return value
-        print(f"🔄 Received {len(current_quotes)} quotes from extraction")
+        #||||||||||| Analyze Data Extraction |||||||||||
+        current_quotes = data_extraction(page)  # Store return value # Why It Store in a Variable not in a list? 
+        print(f"🔄 Received {len(current_quotes)} quotes from extraction") # Counting the Length of the Quotes 
 
         # Track new unique quotes
-        # new_count = 0
-        # for quote in current_quotes:
-        #     if quote not in all_quotes:  # Check against master list
-        #         all_quotes.append(quote)
-        #         new_count += 1
-        # print(f"🌟 Added {new_count} new quotes | Total: {len(all_quotes)}")
-        # print()
+        new_count = 0
+        for quote in current_quotes:
+            if quote not in all_quotes:  # Check against master list
+                all_quotes.append(quote)
+                new_count += 1
+        print(f"🌟 Added {new_count} new quotes | Total: {len(all_quotes)}")
+        print()
 
 
-
-
-        
         #||||||||||| Second Termination: Counting The Quotes ||||||||| 
         counting_quotes = len(page.locator(".quote .text").all())
         print(f"Updated Counting of Quotes : {counting_quotes}")
