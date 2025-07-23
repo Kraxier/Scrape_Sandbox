@@ -65,6 +65,73 @@ Waititing and Expect
 
 '''
 
+# |||||||||| Mimicing Human Behaviour Through Pausing |||||||||||
+r'''
+Recommendation 
+Combine with Playwright Waits:
+Always use Playwright's built-in waits (wait_for_selector(), wait_for_load_state()) BEFORE human delays to ensure page readiness.
+'''
+
+# Why I put This Code?
+r'''
+This is Basically Storing the strategic pause of mimicing human behaviour 
+basically i can select what are things i can do and how many seconds in between in doing that thing 
+
+Each value is a tuple representing the minimum and maximum delay time for that context.
+'''
+delay_profiles = {
+    "pre_click": (1.2, 3.5),    # Decision-making before action
+    "post_click": (0.1, 0.4),   # Natural reaction after click
+    "scroll": (0.2, 1.5),       # Reading time during scroll
+    "typing": (0.08, 0.15),     # Per-key typing speed
+    "page_load": (0.8, 4.0),    # "Reading" after navigation
+    "think": (3.0, 8.0)         # Strategic pauses
+}
+
+# Why I Put this Code?
+r'''
+human_delay can pick any of the delay profile the problem of that is i can randomize the 
+behaviour like the "keys" in order to do things or also i can just pick something in delay profile and let the 
+function do the strategic and picking the seconds in between into doing things 
+'''
+def human_delay(context: str) -> None:
+    """Delay based on behavioral context"""
+    min_time, max_time = delay_profiles[context]
+    delay = random.uniform(min_time, max_time)
+    time.sleep(delay)
+r'''
+How to Put Things 
+# 🎲 Randomize the context:
+random_context = random.choice(list(delay_profiles.keys()))
+human_delay(random_context)
+
+# Or Specific Context 
+human_delay("scroll")
+'''
+
+# Understanding the "def human_delay(context: str) -> None:"
+r'''
+🔹context: str 
+This defines the parameter of the function:
+    🔹context is the name of the argument passed into the function (like "typing" or "scroll").
+    🔹: str is a type hint, which tells readers (and tools like linters or IDEs) that context should be a string.
+Examples: human_delay("typing")
+Here, "typing" is a string, and it's passed as the context.
+
+🔹 -> None [This is the return type hint.]
+    🔹-> None means the function does not return any value.
+    🔹It performs an action (like causing a delay), but doesn’t give you anything back.
+
+If you removed the type hints, it would still work in Python:
+eg: def human_delay(context):
+
+…but type hints are helpful for:
+    Code readability
+    Better autocomplete in editors
+    Static analysis (like with mypy)
+'''
+
+# |||||||||| Mimicing Human Behaviour Through Scrolling |||||||||||
 
 
 #||||||||||| Analyze Data Extraction |||||||||||
