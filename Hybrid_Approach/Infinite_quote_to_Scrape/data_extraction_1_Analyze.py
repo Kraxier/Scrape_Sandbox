@@ -64,6 +64,12 @@ And then i needed to do Scroll Timing and Position Tracking which is very quote 
 Waititing and Expect 
 
 '''
+# |||||||||| Mimicing Human Behaviour Through Scrolling |||||||||||
+
+
+
+
+
 
 # |||||||||| Mimicing Human Behaviour Through Pausing |||||||||||
 r'''
@@ -130,9 +136,6 @@ eg: def human_delay(context):
     Better autocomplete in editors
     Static analysis (like with mypy)
 '''
-
-# |||||||||| Mimicing Human Behaviour Through Scrolling |||||||||||
-
 
 #||||||||||| Analyze Data Extraction |||||||||||
 # Second Version of data_extraction(page):
