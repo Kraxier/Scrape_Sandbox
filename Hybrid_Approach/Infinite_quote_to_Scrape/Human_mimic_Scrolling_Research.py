@@ -181,16 +181,17 @@ delay_profiles = {
     "think": (3.0, 8.0),
     "scrolling_pixel": (200, 895)
 }
-Generate random scroll amount
 
+Generate random scroll amount
 python
 min_px, max_px = delay_profiles["scrolling_pixel"]
 scroll_amount = random.uniform(min_px, max_px)
-Add random delays
 
+Add random delays
 python
 min_delay, max_delay = delay_profiles["scroll"]
 time.sleep(random.uniform(min_delay, max_delay))
+
 🔄 Phase 4: Human-like Patterns
 Implement random direction (up/down)
 
@@ -199,15 +200,16 @@ direction = 1  # Default down
 if random.random() < 0.3:  # 30% chance to scroll up
     direction = -1
 scroll_amount *= direction
-Add occasional long pauses
 
+Add occasional long pauses
 python
 if random.random() < 0.25:  # 25% chance
     think_min, think_max = delay_profiles["think"]
     time.sleep(random.uniform(think_min, think_max))
-🧪 Phase 5: Integration & Testing
-Create scroll function skeleton
 
+🧪 Phase 5: Integration & Testing
+
+Create scroll function skeleton
 python
 def human_scroll(page, scroll_count=10):
     # Get viewport height
