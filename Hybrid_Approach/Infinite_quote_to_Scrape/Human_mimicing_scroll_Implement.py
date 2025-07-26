@@ -4,6 +4,8 @@ import random
 import time
 # 
 
+# I think i did a good Work and Now the Integrating Part of this 
+
 # I think I should not put the "scrolling pixel"
 delay_profiles = {
     "pre_click": (1.2, 3.5),    # Decision-making before action
@@ -115,6 +117,19 @@ def human_scrolling(page):
         time.sleep(random.uniform(think_min, think_max))
 
     # Next Step is 🚀 Phase 6: Optimization and 📊 Phase 7: Final Polish
+
+    # Phase 6 Optimization: 
+    
+    # Limit max scroll to 80% of viewport
+    # Get the "view_portheight" and times the 0.8 which is 80% of the viewport thing 
+    # that 80% is the Max Scrolling i should do this earlier part of my stuff stupid me
+    max_scroll = viewport_height * 0.8
+    scroll_amount = min(scroll_amount, max_scroll)
+
+    # Jumping to 📊 Phase 7: Final Polish
+    # Adding Logging for Debugging
+
+
     # Next Step is Integrate it at Data Extraction Part 
 
 def run(playwright: Playwright):
@@ -141,3 +156,51 @@ def run(playwright: Playwright):
 
 with sync_playwright() as playwright:
     run(playwright)
+
+
+
+# Concept of Debugging and Logging for Software Engineering and Programming 
+
+# What is Debugging? 
+
+r'''
+🔍 Debugging
+Debugging is the process of finding and fixing bugs (errors or flaws) in software code. It usually involves:
+    Identifying where and why something is going wrong.
+    Inspecting variable values, execution flow, and logic.
+    Correcting the code to remove the problem.
+
+🛠 How Debugging is Done:
+Using a debugger tool (like those in Visual Studio, PyCharm, or Chrome DevTools) to:
+    Set breakpoints (pause the program at a specific line).
+    Step through code line by line.
+    Inspect variables and memory.
+    Check the call stack (history of function calls).
+'''
+
+# What is Logging? 
+r'''
+📜 Logging
+Logging is the process of recording events or messages that happen while a program runs, usually to a file, console, or logging service.
+
+📋 Why Logging is Useful:
+    * Helps track the behavior of the application in real time or after a crash.
+    * Useful in production environments where debugging tools are not available.
+    * Helps in monitoring and troubleshooting without interrupting the running program.
+
+🧩 Typical Logging Information:
+    * Errors and exceptions.
+    * Start/finish of operations.
+    * User actions.
+    * System events (e.g., database connections).
+'''
+
+# My Reflection: 
+r'''
+I can do Debugging if i want to integrate it in "data_extraction_analyzing"
+
+But i can do Logoging 
+    just by "print()" and i been doing that to see whether my program is working 
+
+Basically to Monitor Things out 
+'''

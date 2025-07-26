@@ -64,7 +64,7 @@ And then i needed to do Scroll Timing and Position Tracking which is very quote 
 Waititing and Expect 
 
 '''
-# |||||||||| Mimicing Human Behaviour Through Scrolling |||||||||||
+
 
 
 
@@ -161,6 +161,14 @@ def human_scrolling(page):
     print(f"Initial Scroll Positon of the Page is {initial_scroll_pos} and Initial Height Positon of the Page is {initial_height_page} ") # Printing Things 
     print()
     print()
+
+
+    # |||||||||| Mimicing Human Behaviour Through Scrolling |||||||||||
+
+    # Why? For 80% Maximum Scrolling Thing 
+    viewport_height = page.viewport_size["height"]
+    print(f"Viewport height: {viewport_height}px")
+    
 
 
     #||||||||||| Maximum Attempt First Termination |||||||||||

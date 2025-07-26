@@ -227,20 +227,22 @@ test_sites = [
     "https://news.ycombinator.com",
     "https://reddit.com"
 ]
-🚀 Phase 6: Optimization
-Add viewport-relative scrolling
 
+🚀 Phase 6: Optimization
+
+Add viewport-relative scrolling
 python
 # Limit max scroll to 80% of viewport
 max_scroll = viewport_height * 0.8
 scroll_amount = min(scroll_amount, max_scroll)
-Implement variable scroll count
 
+Implement variable scroll count
 python
 scroll_count = random.randint(5, 15)
-📊 Phase 7: Final Polish
-Add logging for debugging
 
+📊 Phase 7: Final Polish
+
+Add logging for debugging
 python
 print(f"Scrolling {'DOWN' if direction > 0 else 'UP'} {abs(scroll_amount):.0f}px")
 Create parameter dictionary for customization
