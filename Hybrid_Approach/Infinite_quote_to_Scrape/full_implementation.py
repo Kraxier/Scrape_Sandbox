@@ -1,3 +1,9 @@
+r'''
+Things i needed Implementation:
+    1. Position Based Extraction 
+    2. 
+'''
+
 
 from playwright.sync_api import sync_playwright, Playwright
 from urllib.parse import urljoin

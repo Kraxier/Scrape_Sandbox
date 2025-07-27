@@ -1,12 +1,39 @@
 # venv_PS_Toscrape\Scripts\activate
+
+
+# Creating a History Right now To See The Progress that i been Made: 
+r'''
+July 28, 2025:
+    1. Thinking What i needed to do next 
+    2. Thinking i should create a README.md Organizing all the Files(Low Energy Task, Less Priority)
+    3. Going Jump to the Project of Scrapping the Jobs 
+    4. How to Document the Timeline 
+        Bullet Journal 
+            * Documenting What i been Doing in the Past, Present and Plan for the Future 
+    5. Documenting the Timeline in Learning 
+        * Concept --> Practise --> Feynman Technique
+
+What is the Most Priority 
+    1. Create a Project in Playwright (Jobs Scrapping)
+    2. Document What is the Current Skill that i have in Playwright and Overall Web Scrapping Skills and Plan for the Future
+        * After Documenting Plan for the Deliberate Practice for Concept 
+        * How should i Balance Between the Line of Project Approach and Structural Learning
+        
+
+Practice is for Practical Implementation
+Practise is the Routinely that you needed to do to master something 
+
+'''
+
+
+
+
 r'''
 Plan for Hybrid Approach at Things 
 Stacking the Concepts after Applying 
 80/20 Rule DONT FORGET THIS STUFF 
 
 Using the Guide of playwright_toscrape_progression thing 
-
-
 
 --------------------------
 
